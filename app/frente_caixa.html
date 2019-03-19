@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Colibri 1.0.0</title>
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="styles/frente_caixa.css" rel="stylesheet">
+    <link rel="stylesheet" href="datatables/dataTables.bootstrap.css">
+</head>
+
+<body id="body">
+    <div class="container" id="container">
+        <div class="row" id="nav-second">
+            <h1 id="title">Frente de Caixa</h1>
+            <div class="col-md-12" id="menu">
+                <a class="btn btn-lg btn-default" href="frente_caixa.html" role="button">Reload</a>
+                <a class="btn btn-lg btn-default" href="main.html" role="button">Home</a>
+                <a class="btn btn-lg btn-default" href="main.html" role="button" disabled>Finalizar</a>
+                <a class="btn btn-lg btn-default" href="index.html" role="button">Clientes</a>
+                <a class="btn btn-lg btn-default" href="produtos.html" role="button">Produtos</a>
+                <a class="btn btn-lg btn-default" href="vendas.html" role="button">Vendas</a>
+                <a class="btn btn-lg btn-default" href="produtos.html" role="button" disabled>Fechar
+                    Caixa</a>
+            </div>
+        </div>
+        <div class="row" id="nav-second">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <select v-model="venda.cliente" class="form-control">
+                        <option value="{{c.nome}}" v-for="c in clientes">{{c.nome}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <input type="text" class="form-control" value="{{date}}" placeholder="Emissão">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6" id="produtoscontainer">
+                <h2 id="title">Produtos</h2>
+                <table id="frente" class="table table-bordered table-striped colortable">
+                    <thead>
+                        <tr>
+                            <th>Código de Barras</th>
+                            <th>Produto</th>
+                            <th>Preço R$</th>
+                            <th>Visualizar</th>
+                            <th>Adicionar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="produto in produtos">
+                            <td>{{produto.cod_barras}}</td>
+                            <td>{{produto.nome}}</td>
+                            <td id="price">R$ {{produto.preco}}</td>
+                            <td><a class="btn btn-sm btn-default" href="" role="button">Visualizar</a></td>
+                            <td><a class="btn btn-sm btn-default" href="" role="button">Adicionar</a></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Código de Barras</th>
+                            <th>Produto</th>
+                            <th>Preço R$</th>
+                            <th>Visualizar</th>
+                            <th>Adicionar</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="col-md-6" id="descriptioncontainer">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 id="title">Descrição</h2>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 0px">
+                    <div class="col-md-12">
+                        <h3 id="description">Leite em pó</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Preço R$</label>
+                            <input type="text" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Quantidade</label>
+                            <input type="text" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Valor Total R$</label>
+                            <input type="text" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Subtotal R$</label>
+                            <input type="text" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="frente" class="table table-bordered table-striped colortable">
+                            <thead>
+                                <tr>
+                                    <th>Cód.</th>
+                                    <th>Descrição</th>
+                                    <th>Preço</th>
+                                    <th>Qtd.</th>
+                                    <th>Valor Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!--
+                                <tr v-for="produto in produtos">
+                                    <td>{{produto.cod_barras}}</td>
+                                    <td>{{produto.nome}}</td>
+                                    <td id="price">R$ {{produto.preco}}</td>
+                                    <td><a class="btn btn-sm btn-default" href="" role="button">Visualizar</a></td>
+                                    <td><a class="btn btn-sm btn-default" href="" role="button">Adicionar</a></td>
+                                </tr>
+                                -->
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Cód.</th>
+                                    <th>Descrição</th>
+                                    <th>Preço</th>
+                                    <th>Qtd.</th>
+                                    <th>Valor Total</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Dinheiro R$</label>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Troco R$</label>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Total R$</label>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="bootstrap/js/jquery.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="datatables/jquery.dataTables.min.js"></script>
+    <script src="datatables/dataTables.bootstrap.min.js"></script>
+    <script src="scripts/screens/frente_caixa/datatableset.js"></script>
+    <script src="scripts/screens/frente_caixa/frente_data.js"></script>
+</body>
+
+</html>

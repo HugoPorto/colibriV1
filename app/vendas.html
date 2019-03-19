@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Colibri 1.0.0</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="photon/css/photon.css">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/vendas.css">
+</head>
+
+<body>
+    <div class="window">
+        <header class="toolbar toolbar-header">
+            <p class="title" style="padding: 5px; font-weight: bold; font-size: 14px">Colibri 1.0 - Vendas</p>
+            <div class="toolbar-actions">
+                <div class="btn-group">
+                    <button class="btn btn-default" style="padding: 10px">
+                        <span class="icon icon-home" style="margin-right: 3px"></span>
+                        <a href="main.html" role="button"
+                            style="margin-top:10px; text-decoration: none; color: black">Home</a>
+                    </button>
+                    <button class="btn btn-default" style="padding: 10px;" @click="createSale()">
+                        <span class="icon icon-plus"></span>
+                        Novo Venda
+                    </button>
+                    <button class="btn btn-default" style="padding: 10px" @click="makeDebug()">
+                        <span class="icon icon-info-circled" style="margin-right: 3px"></span>
+                        Ativar Modo Debug
+                    </button>
+                    <!-- <button class="btn btn-default" style="padding: 10px" @click="backup()">
+                        <span class="icon icon-database" style="margin-right: 3px"></span>
+                        Fazer backup do banco de dados
+                    </button> -->
+                </div>
+            </div>
+        </header>
+        <div class="window-content">
+            <div class="pane-group">
+                <div class="pane-sm sidebar">
+                    <nav class="nav-group">
+                        <h5 class="nav-group-title">Menu</h5>
+                        <span class="nav-group-item">
+                            <span class="icon icon-users"></span>
+                            <a href="index.html" style="text-decoration: none; color: black">
+                                Clientes
+                            </a>
+                        </span>
+                        <span class="nav-group-item">
+                            <span class="icon icon-layout"></span>
+                            <a href="produtos.html" style="text-decoration: none; color: black">
+                                Produtos
+                            </a>
+                        </span>
+                        <span class="nav-group-item">
+                            <span class="icon icon-basket"></span>
+                            <a href="vendas.html" style="text-decoration: none; color: black">
+                                Vendas
+                            </a>
+                        </span>
+                        <span class="nav-group-item">
+                            <span class="icon icon-tools"></span>
+                            <a href="configuracoes.html" style="text-decoration: none; color: black">
+                                Configurações
+                            </a>
+                        </span>
+                        <span class="nav-group-item">
+                            <span class="icon icon-basket"></span>
+                            <a href="frente_caixa.html" style="text-decoration: none; color: black">
+                                Frente de Caixa
+                            </a>
+                        </span>
+                    </nav>
+                </div>
+                <div class="pane">
+                    <table class="table table-striped" id="font-table">
+                        <thead>
+                            <tr>
+                                <th>Data Venda</th>
+                                <th>Cliente</th>
+                                <th>Produto</th>
+                                <th>Preço Unitário</th>
+                                <th>Quantidade</th>
+                                <th>Observação</th>
+                                <th>Total</th>
+                                <th>Editar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="venda in vendas">
+                                <td>{{venda.dataVenda}}</td>
+                                <td>{{venda.cliente}}</td>
+                                <td>{{venda.produto}}</td>
+                                <td>R$ {{venda.preco_unitario}}</td>
+                                <td>{{venda.quantidade}}</td>
+                                <td>{{venda.observacao}}</td>
+                                <td>R$ {{venda.quantidade*venda.preco_unitario}}</td>
+                                <td>
+                                    <button @click="editSale(venda)" id="font-button"
+                                        class="btn btn-large btn-primary">Editar</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h3 style="padding: 20px">TOTAL EM CAIXA: R$ {{total}}</h3>
+                    <div style="padding: 20px; background-color: black; color: white" v-if="debug == true">
+                        <h1 style="color: white">Debug</h1>
+                        <pre>{{$data | json}}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal" v-if="openModal">
+        <div class="wrap">
+            <form action="" id="cadastro-clientes" class="pane-body">
+                <h3 v-if="mode=='cadastro'">
+                    <strong>Cadastro de Vendas</strong>
+                </h3>
+                <h3 v-if="mode=='edicao'">
+                    <strong>Edição de Vendas</strong>
+                </h3>
+                <hr>
+                <div class="form-group">
+                    <input type="text" class="form-control" v-model="venda.dataVenda" placeholder="Data da Venda"
+                        required="true">
+                </div>
+                <hr>
+                <div class="form-group">
+                    <label>Selecionar Cliente</label>
+                    <select v-model="venda.cliente" class="form-control">
+                        <option value="{{c.nome}}" v-for="c in clientes">{{c.nome}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Selecionar Produto</label>
+                    <select v-model="venda.produto" class="form-control">
+                        <option value="{{p.nome}}" v-for="p in produtos">{{p.nome}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input v-if="mode=='edicao'" id="preco" type="text" class="form-control"
+                        v-model="venda.preco_unitario" placeholder="Preço">
+                </div>
+                <div class="form-group">
+                    <input id="quantidade" type="text" class="form-control" v-model="venda.quantidade"
+                        placeholder="Quantidade">
+                </div>
+                <div class="form-group">
+                    <input id="observacao" type="text" class="form-control" v-model="venda.observacao"
+                        placeholder="Observação" required="true">
+                </div>
+                <hr>
+                <div class="form-actions">
+                    <!--Se eu usar type="buttom ele não recarrega a página...-->
+                    <button type="button" class="btn btn-large btn-negative" @click="openModal=false">Fechar</button>
+                    <button type="button" class="btn btn-large btn-primary" @click="saleStoreOrUpdate()">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="scripts/screens/vendas/vendas.js"></script>
+</body>
+
+</html>

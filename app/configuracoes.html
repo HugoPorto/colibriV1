@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Colibri 1.0.0</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="photon/css/photon.css">
+  <link rel="stylesheet" href="styles/style.css">
+  <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="window">
+    <header class="toolbar toolbar-header">
+      <p class="title" style="padding: 5px; font-weight: bold; font-size: 14px">Colibri 1.0 - Configurações</p>
+      <div class="toolbar-actions">
+        <div class="btn-group">
+          <button class="btn btn-default" style="padding: 10px; border-radius: 5px">
+            <span class="icon icon-home" style="margin-right: 3px"></span>
+            <a href="main.html" role="button" style="margin-top:10px; text-decoration: none; color: black">Home</a>
+          </button>
+        </div>
+      </div>
+    </header>
+    <div class="window-content">
+      <div class="pane-group">
+        <!--
+        <div class="pane-sm sidebar">
+          <nav class="nav-group">
+            <h5 class="nav-group-title">Menu</h5>
+            <span class="nav-group-item">
+              <span class="icon icon-tools"></span>
+              <a style="text-decoration: none; color: black" @click="dbFront()">
+                Gerenciar Base de Dados
+              </a>
+            </span>
+            <span class="nav-group-item">
+              <span class="icon icon-tools"></span>
+              <a href="produtos.html" style="text-decoration: none; color: black">
+                Categrias
+              </a>
+            </span>
+            <span class="nav-group-item">
+              <span class="icon icon-tools"></span>
+              <a href="vendas.html" style="text-decoration: none; color: black">
+                Moedas
+              </a>
+            </span>
+            <span class="nav-group-item">
+              <span class="icon icon-tools"></span>
+              <a href="configuracoes.html" style="text-decoration: none; color: black">
+                Taxa de Impostos
+              </a>
+            </span>
+            <span class="nav-group-item">
+              <span class="icon icon-tools"></span>
+              <a href="configuracoes.html" style="text-decoration: none; color: black">
+                Configurar NFC-E
+              </a>
+            </span>
+          </nav>
+        </div>
+        -->
+        <div class="pane">
+          <!--
+            <section class="jumbotron text-center" v-if="jumbotron == true"
+            style="background-color:#d7d7d7; border-radius:0px; height: 900px;">
+            <div class="container" style="color: black">
+              <h1 class="jumbotron-heading">Bem-Vindo a Área de Configurações</h1>
+              <p>Escolha um item do menu para configurar</p>
+            </div>
+          </section>
+          -->
+          <div class="row">
+            <div class="col-md-12" style="padding:20px">
+              <span class="nav-group-item">
+                <span class="icon icon-database"></span>
+                <a style="text-decoration: none; color: black" @click="backup()">
+                  Fazer backup do banco de dados
+                </a>
+              </span>
+              <span class="nav-group-item">
+                <span class="icon icon-database"></span>
+                <a href="main.html" style="text-decoration: none; color: black" @click="newDB()">
+                  Gerar novo banco de dados
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    require('../renderer.js');
+  </script>
+  <script src="scripts/screens/configuracoes/configuracoes.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Colibri 1.0.0</title>
+  <meta charset="utf-8">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="photon/css/photon.css">
+  <link rel="stylesheet" href="styles/style.css">
+  <!-- Electron Javascript -->
+  <!-- <script src="app.js" charset="utf-8"></script> -->
+</head>
+
+<body>
+  <div class="window">
+    <header class="toolbar toolbar-header">
+      <p class="title" style="padding: 5px; font-weight: bold; font-size: 14px">Colibri 1.0 - Investimentos</p>
+      <div class="toolbar-actions">
+        <div class="btn-group">
+          <button class="btn btn-default" style="padding: 10px">
+            <span class="icon icon-home" style="margin-right: 3px"></span>
+            <a href="main.html" role="button" style="margin-top:10px; text-decoration: none; color: black">Home</a>
+          </button>
+          <button class="btn btn-default" @click="createClient()" style="padding: 10px">
+            <span class="icon icon-plus"></span>
+            Novo Cliente
+          </button>          
+        </div>
+      </div>
+    </header>
+    <div class="window-content">
+      <div class="pane-group">
+        <div class="pane-sm sidebar">
+          <nav class="nav-group">
+            <h5 class="nav-group-title">Menu</h5>
+            <span class="nav-group-item">
+              <span class="icon icon-users"></span>
+              <a href="index.html" style="text-decoration: none; color: black">
+                Clientes
+              </a>
+            </span>
+            <span class="nav-group-item">
+              <span class="icon icon-layout"></span>
+              <a href="produtos.html" style="text-decoration: none; color: black">
+                Produtos
+              </a>
+            </span>
+            <span class="nav-group-item">
+              <span class="icon icon-basket"></span>
+              <a href="vendas.html" style="text-decoration: none; color: black">
+                Vendas
+              </a>
+            </span>
+            <span class="nav-group-item">
+              <span class="icon icon-tools"></span>
+              <a href="configuracoes.html" style="text-decoration: none; color: black">
+                Configurações
+              </a>
+            </span>
+            <span class="nav-group-item">
+              <span class="icon icon-database"></span>
+              <a href="frente_caixa.html" style="text-decoration: none; color: black">
+                Frente de Caixa
+              </a>
+            </span>
+          </nav>
+        </div>
+        <div class="pane">
+          <!--<button class="btn btn-default" style="margin: 10px" @click="createClient()">Criar novo cliente</button>-->
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Editar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="cliente in clientes">
+                <td>{{cliente.nome}}</td>
+                <td>{{cliente.cpf}}</td>
+                <td>
+                  <button @click="editClient(cliente)" class="btn btn-primary">Editar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <footer class="toolbar toolbar-footer">
+      <h1 class="title">Focux - Todos os direitos reservados ®</h1>
+    </footer>
+  </div>
+  <div id="modal" v-if="openModal">
+    <div class="wrap">
+      <form id="cadastro-clientes" class="pane-body">
+        <h3 v-if="mode=='cadastro'">
+          <strong>Cadastro de Clientes</strong>
+        </h3>
+        <h3 v-if="mode=='edicao'">
+          <strong>Edição de Clientes</strong>
+        </h3>
+        <div class="form-group">
+          <input id="nome" type="text" class="form-control" v-model="client.nome" placeholder="Nome">
+          <br />
+          <br />
+          <input id="cpf" type="text" class="form-control" v-model="client.cpf" placeholder="CPF">
+          <br />
+          <br />
+          <input id="telefone" type="text" class="form-control" v-model="client.telefone" placeholder="Telefone">
+          <br />
+          <br />
+          <input id="email" type="text" class="form-control" v-model="client.email" placeholder="E-mail">
+          <br />
+          <br />
+          <input id="endereco" type="text" class="form-control" v-model="client.endereco" placeholder="Endereço">
+          <br />
+          <br />
+          <input id="bairro" type="text" class="form-control" v-model="client.bairro" placeholder="Bairro">
+          <br />
+          <br />
+          <input id="numero" type="text" class="form-control" v-model="client.numero" placeholder="Número">
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-negative" @click="openModal=false">Fechar</button>
+          <button type="button" class="btn btn-primary" @click="clientStoreOrUpdate()">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    var loki = require("lokijs");
+    var db = new loki("loki.json");
+    var fileExists = require('file-exists');
+    var read = require('read-file-utf8');
+
+    var data = read('./loki.json');
+    db.loadJSON(data);
+
+    /**    
+    var data = {};
+    fileExists('./loki.json').then(exists => {
+      if (exists == false) {
+        db.addCollection('clientes');
+        db.addCollection('produtos');
+        db.addCollection('vendas');
+        db.save();
+      } else {
+        data = read('./loki.json');
+        console.log('==========Dados do Banco de Dados========');
+        console.log(data);
+        console.log('==========Dados do Banco de Dados========');
+        this.db.loadJSON(data);
+      }
+    })
+    **/
+    window.Vue = require('vue');
+
+    console.log('========Load dos Clientes========');
+    console.log('Tipo: ' + typeof db.getCollection('clientes'));
+    console.log('Collection: ' + db.getCollection('clientes'));
+    console.log('========Load dos Clientes========');
+
+    /**
+    if (db.getCollection('clientes') == null) {
+      var clientes = db.addCollection('clientes');
+      db.save();
+      alert('Coleção de clientes criada com sucesso...');
+    }
+    **/
+
+    var clientes = db.getCollection('clientes');
+
+    new Vue({
+      el: 'body',
+      data: {
+        clientes: [],
+        mode: '',
+        client: {
+          nome: '',
+          cpf: '',
+          telefone: '',
+          email: '',
+          endereco: '',
+          bairro: '',
+          numero: ''
+        },
+        openModal: false
+      },
+      ready: function () {
+        this.mode = 'edicao';
+        this.clientes = clientes.data;
+        console.log(this.clientes);
+      },
+      methods: {
+        editClient: function (client) {
+          this.openModal = true;
+          this.client = client
+        },
+        createClient: function () {
+          this.mode = 'cadastro';
+          this.openModal = true;
+          this.client = {
+            nome: '',
+            cpf: '',
+            telefone: '',
+            email: '',
+            endereco: '',
+            bairro: '',
+            numero: ''
+          };
+        },
+        clientStoreOrUpdate: function () {
+          if (typeof this.client.$loki !== 'undefined') {
+            clientes.update(this.client);
+          } else {
+            clientes.insert(this.client);
+          }
+          db.save();
+          this.openModal = false;
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

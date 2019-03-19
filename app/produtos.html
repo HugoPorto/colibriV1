@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Colibri 1.0.0</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="photon/css/photon.css">
+    <link rel="stylesheet" href="styles/style.css">
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="datatables/dataTables.bootstrap.css">
+
+</head>
+
+<body>
+    <div class="window">
+        <header class="toolbar toolbar-header">
+            <p class="title" style="padding: 5px; font-weight: bold; font-size: 14px">Colibri 1.0.0 - Produtos</p>
+            <div class="toolbar-actions">
+                <div class="btn-group">
+                    <button class="btn btn-default" style="padding: 10px">
+                        <span class="icon icon-home" style="margin-right: 3px"></span>
+                        <a href="main.html" role="button" style="margin-top:10px; text-decoration: none; color: black">Home</a>
+                    </button>
+                    <button class="btn btn-default" style="padding: 10px" @click="createProduct()">
+                        <span class="icon icon-plus"></span>
+                        Novo Produto
+                    </button>
+                    <button class="btn btn-default" style="padding: 10px" @click="makeDebug()">
+                        <span class="icon icon-info-circled" style="margin-right: 3px"></span>
+                        Ativar Modo Debug
+                    </button>
+                </div>
+            </div>
+        </header>
+        <div class="window-content">
+            <div class="pane-group">
+                <div class="pane-sm sidebar">
+                    <nav class="nav-group">
+                        <h5 class="nav-group-title">Menu</h5>
+                        <span class="nav-group-item">
+                            <span class="icon icon-users"></span>
+                            <a href="index.html" style="text-decoration: none; color: black">
+                                Clientes
+                            </a>
+                        </span>
+                        <span class="nav-group-item">
+                            <span class="icon icon-layout"></span>
+                            <a href="produtos.html" style="text-decoration: none; color: black">
+                                Produtos
+                            </a>
+                        </span>
+                        <span class="nav-group-item">
+                            <span class="icon icon-basket"></span>
+                            <a href="vendas.html" style="text-decoration: none; color: black">
+                                Vendas
+                            </a>
+                        </span>
+                        <span class="nav-group-item">
+                            <span class="icon icon-tools"></span>
+                            <a href="configuracoes.html" style="text-decoration: none; color: black">
+                                Configurações
+                            </a>
+                        </span>
+                        <span class="nav-group-item">
+                            <span class="icon icon-basket"></span>
+                            <a href="frente_caixa.html" style="text-decoration: none; color: black">
+                                Frente de Caixa
+                            </a>
+                        </span>
+                    </nav>
+                </div>
+                <div class="pane">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="tabbable" id="tabs-315662">
+                                <ul class="nav nav-tabs">
+                                    <li class="active">
+                                        <a style="border-radius: 0px" href="#panel-34198" data-toggle="tab" id="tab_border">Listagem
+                                            de Produtos</a>
+                                    </li>
+                                    <li>
+                                        <a style="border-radius: 0px" href="#panel-470049" data-toggle="tab" id="tab_border">NCM</a>
+                                    </li>
+                                    <li>
+                                        <a style="border-radius: 0px" href="#panel-4700498" data-toggle="tab" id="tab_border">CFOP</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="panel-34198">
+                                        <div class="base">
+                                            <table class="table table-striped" id="font-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Código</th>
+                                                        <th>Código de Barra</th>
+                                                        <th>Produto</th>
+                                                        <th>NCM</th>
+                                                        <th>CFOP</th>
+                                                        <th>Preço R$</th>
+                                                        <th>Quantidade</th>
+                                                        <!-- <th>Código de Barras</th>
+                                                        <th>Peso Líquido</th>
+                                                        <th>Peso Bruto</th> -->
+                                                        <th>Editar</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="produto in produtos">
+                                                        <td>{{produto.codigo}}</td>
+                                                        <td>{{produto.codigoBarra}}</td>
+                                                        <td>{{produto.nome}}</td>
+                                                        <td>{{produto.ncm}}</td>
+                                                        <td>{{produto.cfop}}</td>
+                                                        <td>R$ {{produto.preco}}</td>
+                                                        <td>{{produto.quantidade}}</td>
+                                                        <td>
+                                                            <button @click="editProduct(produto)" id="font-button"
+                                                                class="btn btn-large btn-primary">Editar</button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="row" v-if="debug == true">
+                                                <div class="col-md-12" style="padding: 0px">
+                                                    <div style="padding: 20px; background-color: black; color: white">
+                                                        <h1 style="color: white">Debug</h1>
+                                                        <pre style="background-color: black; color: white;border: 0px">{{produtos | json}}</pre>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="panel-470049">
+                                        <div class="base">
+                                            <div class="row" style="padding: 10px">
+                                                <div class="col-md-12" style="margin-top:0px">
+                                                    <table id="ncms" class="table table-bordered table-striped colortable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Código NCM</th>
+                                                                <th>Nome NCM</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr v-for="ncm in ncms">
+                                                                <td>{{ncm.cod_ncm}}</td>
+                                                                <td>{{ncm.nome_ncm}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <th>Código NCM</th>
+                                                                <th>Nome NCM</th>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="panel-4700498">
+                                        <div class="base">
+                                            <div class="row" style="padding: 10px">
+                                                <div class="col-md-12" style="margin-top:0px">
+                                                    <table id="cfop" class="table table-bordered table-striped colortable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Código CFOP</th>
+                                                                <th>Descrição</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr v-for="cfop in cfops">
+                                                                <td>{{cfop.codigo_cfop}}</td>
+                                                                <td>{{cfop.desc_cfop}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <th>Código CFOP</th>
+                                                                <th>Descrição</th>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal" v-if="openModal">
+        <div class="wrap">
+            <form action="" id="cadastro-produtos" class="pane-body">
+                <h3 v-if="mode=='cadastro'">
+                    <strong>Cadastro de Produtos</strong>
+                </h3>
+                <h3 v-if="mode=='edicao'">
+                    <strong>Edição de Clientes</strong>
+                </h3>
+                <hr>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input id="nome" type="text" class="form-control" v-model="produto.codigo" placeholder="Código">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input id="nome" type="text" class="form-control" v-model="produto.codigoBarra" placeholder="Código de Barra">
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <input id="nome" type="text" class="form-control" v-model="produto.nome" placeholder="Nome">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <input id="nome" type="text" class="form-control" v-model="produto.descricao" placeholder="Descrição">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input id="nome" type="text" class="form-control" v-model="produto.ncm" placeholder="NCM">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input id="nome" type="text" class="form-control" v-model="produto.cfop" placeholder="CFOP">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <input id="nome" type="text" class="form-control" v-model="produto.preco" placeholder="Preço Unitário">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <input id="nome" type="text" class="form-control" v-model="produto.quantidade" placeholder="Quantidade">
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-large btn-negative" @click="openModal=false">Fechar</button>
+                    <button type="button" class="btn btn-large btn-primary" @click="productStoreOrUpdate()">Salvar</button>
+                </div>
+            </form>
+            <p v-if="debug == true" style="padding: 10px; background-color: black; color: white">{{produto | json}}</p>
+        </div>
+    </div>
+    <script src="bootstrap/js/jquery.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="datatables/jquery.dataTables.min.js"></script>
+    <script src="scripts/screens/produtos/datatableset.js"></script>
+    <script>
+        var loki = require("lokijs");
+        var db = new loki("loki.json");
+        var read = require('read-file-utf8');
+        var data = read('./loki.json');
+        db.loadJSON(data);
+        window.Vue = require('vue');
+
+        if (db.getCollection('produtos') == null) {
+            var products = db.addCollection('produtos');
+            db.save();
+            alert('Coleção de produtos criada com sucesso...');
+        }
+
+        var produtos = db.getCollection('produtos');
+        var ncms = db.getCollection('ncms');
+        var cfops = db.getCollection('cfops');
+
+        new Vue({
+            el: 'body',
+            data: {
+                debug: false,
+                produtos: [],
+                ncms: [],
+                cfops: [],
+                mode: '',
+                produto: {
+                    codigo: '',
+                    codigoBarra: '',
+                    nome: '',
+                    descricao: '',
+                    ncm: '',
+                    cfop: '',
+                    preco: 0,
+                    quantidade: 0,
+
+
+                    /**
+                    cProd: '', //Código do produto ou serviço. Preencher com CFOP caso se trate de itens não relacionados com mercadorias/produto e que o contribuinte não possua codificação própria Formato ”CFOP9999”.
+                    nome: '',
+                    quantidade: '',
+                    cEAN: 'Vazio', //(CÓDIGO DE BARRAS)GTIN (Global Trade Item Number) do produto, antigo código EAN ou código de barras
+                    xProd: '', //(NOME)Descrição do produto ou serviço
+                    NCM: '', //Código NCM (8 posições), será permitida a informação do gênero (posição do capítulo do NCM) quando a operação não for de comércio exterior (importação/exportação) ou o produto não seja tributado pelo IPI. Em caso de item de serviço ou item que não tenham produto (Ex. transferência de crédito, crédito do ativo imobilizado, etc.), informar o código 00 (zeros) (v2.0).
+                    CFOP: '', //Cfop
+                    uCom: 'UN', //Unidade comercial. Máximo 6 e mínimo 1.
+                    qCom: '1.0000', //(QUANTIDADE)Quantidade Comercial  do produto, alterado para aceitar de 0 a 4 casas decimais e 11 inteiros.
+                    vUnCom: '', //(PREÇO)Valor unitário de comercialização  - alterado para aceitar 0 a 10 casas decimais e 11 inteiros.
+                    vProd: '', //Valor bruto do produto ou serviço.
+                    cEANTrib: 'Vazio', //(CÓDIGO DE BARRAS)GTIN (Global Trade Item Number) da unidade tributável, antigo código EAN ou código de barras.
+                    uTrib: 'UN', //Unidade Tributável. Máximo 6 e mínimo 1.
+                    qTrib: '1.0000', //Quantidade Tributável - alterado para aceitar de 0 a 4 casas decimais e 11 inteiros.
+                    vUnTrib: '', //Valor unitário de tributação - - alterado para aceitar 0 a 10 casas decimais e 11 inteiros.
+                    indTot: 'Vazio', //Este campo deverá ser preenchido com:
+                    // 0 – o valor do item (vProd) não compõe o valor total da NF-e (vProd),
+                    // 1  – o valor do item (vProd) compõe o valor total da NF-e (vProd).
+                    */
+                },
+                openModal: false
+            },
+            ready: function () {
+                this.mode = 'edicao';
+                this.produtos = produtos.data;
+                this.ncms = ncms.data[0].ncms;
+                this.cfops = cfops.data[0].cfops;
+            },
+            methods: {
+                makeDebug: function () {
+                    if (this.debug == false) {
+                        this.debug = true;
+                    } else {
+                        this.debug = false;
+                    }
+                },
+                editProduct: function (product) {
+                    this.openModal = true;
+                    this.produto = product
+                },
+                createProduct: function () {
+                    this.mode = 'cadastro';
+                    this.openModal = true;
+                    this.produto = {
+                        codigo: '',
+                        codigoBarra: '',
+                        nome: '',
+                        descricao: '',
+                        ncm: '',
+                        cfop: '',
+                        preco: 0,
+                        quantidade: 0,
+                    };
+                },
+                productStoreOrUpdate: function () {
+                    if (typeof this.produto.$loki !== 'undefined') {
+                        produtos.update(this.produto);
+                    } else {
+                        produtos.insert(this.produto);
+                    }
+                    db.save();
+                    this.openModal = false;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

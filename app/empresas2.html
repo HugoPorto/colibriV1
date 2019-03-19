@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Colibri 1.0.0</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="photon/css/photon.css">
+    <link rel="stylesheet" href="styles/modal_empresa.css">
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="window">
+        <header class="toolbar toolbar-header">
+            <p class="title" style="padding: 5px; font-weight: bold; font-size: 14px">Colibri 1.0 - Clientes</p>
+            <div class="toolbar-actions">
+                <div class="btn-group">
+                    <button class="btn btn-default" style="padding: 10px">
+                        <span class="icon icon-home" style="margin-right: 3px"></span>
+                        <a href="main.html" role="button"
+                            style="margin-top:10px; text-decoration: none; color: black">Home</a>
+                    </button>
+                    <button v-if="add == true" class="btn btn-default" @click="createEmpresa()" style="padding: 10px">
+                        <span class="icon icon-plus"></span>
+                        Cadastrar Empresa
+                    </button>
+                    <button class="btn btn-default" style="padding: 10px" @click="makeDebug()">
+                        <span class="icon icon-info-circled" style="margin-right: 3px"></span>
+                        Ativar Modo Debug
+                    </button>
+                </div>
+            </div>
+        </header>
+        <div class="window-content">
+            <div class="pane-group">
+                <div class="pane-sm sidebar">
+                    <nav class="nav-group">
+                        <h5 class="nav-group-title">Menu</h5>
+                        <span class="nav-group-item">
+                            <span class="icon icon-users"></span>
+                            <a href="index.html" style="text-decoration: none; color: black">
+                                Clientes
+                            </a>
+                        </span>
+                        <span class="nav-group-item">
+                            <span class="icon icon-layout"></span>
+                            <a href="produtos.html" style="text-decoration: none; color: black">
+                                Produtos
+                            </a>
+                        </span>
+                        <span class="nav-group-item">
+                            <span class="icon icon-basket"></span>
+                            <a href="vendas.html" style="text-decoration: none; color: black">
+                                Vendas
+                            </a>
+                        </span>
+                        <span class="nav-group-item">
+                            <span class="icon icon-tools"></span>
+                            <a href="configuracoes.html" style="text-decoration: none; color: black">
+                                Configurações
+                            </a>
+                        </span>
+                        <span class="nav-group-item">
+                            <span class="icon icon-basket"></span>
+                            <a href="frente_caixa.html" style="text-decoration: none; color: black">
+                                Frente de Caixa
+                            </a>
+                        </span>
+                    </nav>
+                </div>
+                <div class="pane">
+                    <table class="table table-striped" id="font-table">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Nome Fantasia</th>
+                                <th>E-mail</th>
+                                <th>CNPJ</th>
+                                <th>Editar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="empresa in empresas">
+                                <td>{{empresa.nome}}</td>
+                                <td>{{empresa.nomeFantasia}}</td>
+                                <td>{{empresa.email}}</td>
+                                <td>{{empresa.cnpj}}</td>
+                                <td>
+                                    <button @click="editEmpresa(empresa)" id="font-button"
+                                        class="btn btn-large btn-primary">Editar</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="row" v-if="debug == true">
+                        <div class="col-md-12" style="padding: 0px">
+                            <div style="padding: 20px; background-color: black; color: white">
+                                <h1 style="color: white">Debug</h1>
+                                <pre
+                                    style="background-color: black; color: white;border: 0px">{{$data.empresa | json}}</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal" v-if="openModal">
+        <div class="wrap">
+            <form id="cadastro-clientes" class="pane-body">
+                <h3 v-if="mode=='cadastro'">
+                    <strong>Cadastrar Empresa</strong>
+                </h3>
+                <h3 v-if="mode=='edicao'">
+                    <strong>Editar Empresa</strong>
+                </h3>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input type="text" class="form-control" v-model="empresa.nome" placeholder="Razão Social*"
+                                style="border-color: red">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input type="text" class="form-control" v-model="empresa.nomeFantasia"
+                                placeholder="Nome Fantasia*" style="border-color: red">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input type="text" class="form-control" v-model="empresa.ie"
+                                placeholder="Inscrição Estadual" style="border-color: red">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input type="text" class="form-control" v-model="empresa.cnpj" placeholder="CNPJ*"
+                                style="border-color: red">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input type="text" class="form-control" v-model="empresa.im"
+                                placeholder="Inscrição Municipal*" style="border-color: red">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <select class="form-control" style="border-color: red" v-model="empresa.regimeTributario">
+                                <option value="" selected>Regime Tributário*</option>
+                                <option value="1">Simples Nacional</option>
+                                <option value="2">Simples Nacional – excesso de sublimite de receita bruta</option>
+                                <option value="3">Regime Normal</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input type="text" class="form-control" v-model="empresa.cnae" placeholder="CNAE">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input type="text" class="form-control" v-model="empresa.email"
+                                placeholder="E-mail da Empresa">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input type="text" class="form-control" v-model="empresa.site" placeholder="Site*"
+                                style="border-color: red">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <input type="text" class="form-control" v-model="empresa.responsavel"
+                                placeholder="Responsável">
+                        </div>
+                    </div>
+                </div>
+                <h3><strong>Endereço</strong></h3>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <input type="text" class="form-control" v-model="empresa.endereco.endereco"
+                                placeholder="Endereço*" style="border-color: red">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <input type="text" class="form-control" v-model="empresa.endereco.numero"
+                                placeholder="Número">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input type="text" class="form-control" v-model="empresa.endereco.complemento"
+                                placeholder="Complemento*" style="border-color: red">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class-="form-group">
+                            <input id="bairro" v-model="empresa.endereco.bairro" type="text" class="form-control"
+                                placeholder="Bairro*" style="border-color: red">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input type="text" class="form-control" v-model="empresa.endereco.pais" placeholder="País*"
+                                style="border-color: red">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class-="form-group">
+                            <input id="fone" v-model="empresa.endereco.fone" type="text" class="form-control"
+                                placeholder="Fone*" style="border-color: red">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <select class="form-control" style="border-color: red" v-model="empresa.endereco.municipio">
+                                <option value="">Municípios*</option>
+                                <option value="{{ce.nome_cidade}}" v-for="ce in cidadesestados">
+                                    {{ce.nome_cidade}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <select class="form-control" style="border-color: red" v-model="empresa.endereco.uf">
+                                <option value="">Estados*</option>
+                                <option value="{{e.uf_estado}}" v-for="e in estados">{{e.uf_estado}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <input id="numero" type="text" class="form-control" v-model="empresa.endereco.cep"
+                                placeholder="CEP*" style="border-color: red">
+                        </div>
+                    </div>
+                </div>
+                <h3><strong>Dados da Contabilidade</strong></h3>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <input id="numero" type="text" class="form-control" v-model="empresa.contabilidade.cnpj"
+                                placeholder="CNPJ*" style="border-color: red">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <input id="numero" type="text" class="form-control"
+                                v-model="empresa.contabilidade.responsavel" placeholder="Responsável*"
+                                style="border-color: red">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <input id="numero" type="text" class="form-control" v-model="empresa.contabilidade.email"
+                                placeholder="Email*" style="border-color: red">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <input id="numero" type="text" class="form-control" v-model="empresa.contabilidade.telefone"
+                                placeholder="Telefone*" style="border-color: red">
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-large btn-danger" @click="openModal=false">Fechar</button>
+                    <button type="button" class="btn btn-large btn-primary" @click="emStoreOrUpdate()">Salvar</button>
+                </div>
+            </form>
+            <p v-if="debug == true" style="padding: 10px; background-color: black; color: white">{{empresa | json}}</p>
+        </div>
+    </div>
+    <script src="scripts/screens/empresas2/empresas2.js"></script>
+</body>
+
+</html>

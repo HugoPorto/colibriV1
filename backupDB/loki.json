@@ -1,0 +1,308 @@
+{
+    "filename": "loki.json",
+    "collections": [
+        {
+            "name": "clientes",
+            "data": [
+                {
+                    "nome": "Tou Na Mídia",
+                    "cpf": "",
+                    "telefone": "(91)34251467",
+                    "email": "contato@tounamidia.com.br",
+                    "endereco": "Rod. Bragança - Viseu - Bragança-Pa.",
+                    "bairro": "Riozinho",
+                    "numero": "",
+                    "meta": {
+                        "revision": 1,
+                        "created": 1546599100276,
+                        "version": 0,
+                        "updated": 1548095397689
+                    },
+                    "$loki": 1
+                },
+                {
+                    "nome": "Vanise",
+                    "cpf": "",
+                    "telefone": "",
+                    "email": "",
+                    "endereco": "",
+                    "bairro": "",
+                    "numero": "",
+                    "meta": {
+                        "revision": 1,
+                        "created": 1546642161086,
+                        "version": 0,
+                        "updated": 1548095428784
+                    },
+                    "$loki": 2
+                }
+            ],
+            "idIndex": [
+                1,
+                2
+            ],
+            "binaryIndices": {},
+            "constraints": null,
+            "uniqueNames": [],
+            "transforms": {},
+            "objType": "clientes",
+            "dirty": false,
+            "cachedIndex": null,
+            "cachedBinaryIndex": null,
+            "cachedData": null,
+            "adaptiveBinaryIndices": true,
+            "transactional": false,
+            "cloneObjects": false,
+            "cloneMethod": "parse-stringify",
+            "asyncListeners": false,
+            "disableMeta": false,
+            "disableChangesApi": true,
+            "disableDeltaChangesApi": true,
+            "autoupdate": false,
+            "serializableIndices": true,
+            "ttl": null,
+            "maxId": 2,
+            "DynamicViews": [],
+            "events": {
+                "insert": [],
+                "update": [],
+                "pre-insert": [],
+                "pre-update": [],
+                "close": [],
+                "flushbuffer": [],
+                "error": [],
+                "delete": [
+                    null
+                ],
+                "warning": [
+                    null
+                ]
+            },
+            "changes": []
+        },
+        {
+            "name": "produtos",
+            "data": [
+                {
+                    "nome": "Site Dinâmico com Cakephp 3 - Básico",
+                    "preco": "2.500,00",
+                    "quantidade": "1",
+                    "cod_barras": "0000001",
+                    "peso_liquido": "Não definido para esse produto",
+                    "peso_bruto": "Não definido para esse produto",
+                    "meta": {
+                        "revision": 6,
+                        "created": 1546601358691,
+                        "version": 0,
+                        "updated": 1548095630406
+                    },
+                    "$loki": 1
+                },
+                {
+                    "nome": "App Container para Site",
+                    "preco": "1.000,00",
+                    "quantidade": "1",
+                    "cod_barras": "0000002",
+                    "peso_liquido": "Não definido para esse produto",
+                    "peso_bruto": "Não definido para esse produto",
+                    "meta": {
+                        "revision": 2,
+                        "created": 1546601421870,
+                        "version": 0,
+                        "updated": 1548095597277
+                    },
+                    "$loki": 2
+                },
+                {
+                    "nome": "Xerox",
+                    "preco": "0,10",
+                    "quantidade": "1",
+                    "cod_barras": "0000003",
+                    "peso_liquido": "Não definido para esse produto",
+                    "peso_bruto": "Não definido para esse produto",
+                    "meta": {
+                        "revision": 2,
+                        "created": 1546610462505,
+                        "version": 0,
+                        "updated": 1548095612288
+                    },
+                    "$loki": 3
+                },
+                {
+                    "nome": "API Cakephp 3",
+                    "preco": "800,00",
+                    "quantidade": "1",
+                    "cod_barras": "0000004",
+                    "peso_liquido": "Não definido para esse produto",
+                    "peso_bruto": "Não definido para esse produto",
+                    "meta": {
+                        "revision": 2,
+                        "created": 1546610534185,
+                        "version": 0,
+                        "updated": 1548095653578
+                    },
+                    "$loki": 4
+                },
+                {
+                    "nome": "Arte Gráfica",
+                    "preco": "50,00",
+                    "quantidade": "1",
+                    "cod_barras": "0000005",
+                    "peso_liquido": "Não definido para esse produto",
+                    "peso_bruto": "Não definido para esse produto",
+                    "meta": {
+                        "revision": 2,
+                        "created": 1546611961643,
+                        "version": 0,
+                        "updated": 1548095666546
+                    },
+                    "$loki": 5
+                },
+                {
+                    "nome": "Impressão",
+                    "preco": "0,45",
+                    "quantidade": "1",
+                    "cod_barras": "0000006",
+                    "peso_liquido": "Não definido para esse produto",
+                    "peso_bruto": "Não definido para esse produto",
+                    "meta": {
+                        "revision": 2,
+                        "created": 1546612016819,
+                        "version": 0,
+                        "updated": 1548095704350
+                    },
+                    "$loki": 6
+                }
+            ],
+            "idIndex": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+            ],
+            "binaryIndices": {},
+            "constraints": null,
+            "uniqueNames": [],
+            "transforms": {},
+            "objType": "produtos",
+            "dirty": false,
+            "cachedIndex": null,
+            "cachedBinaryIndex": null,
+            "cachedData": null,
+            "adaptiveBinaryIndices": true,
+            "transactional": false,
+            "cloneObjects": false,
+            "cloneMethod": "parse-stringify",
+            "asyncListeners": false,
+            "disableMeta": false,
+            "disableChangesApi": true,
+            "disableDeltaChangesApi": true,
+            "autoupdate": false,
+            "serializableIndices": true,
+            "ttl": null,
+            "maxId": 6,
+            "DynamicViews": [],
+            "events": {
+                "insert": [],
+                "update": [],
+                "pre-insert": [],
+                "pre-update": [],
+                "close": [],
+                "flushbuffer": [],
+                "error": [],
+                "delete": [
+                    null
+                ],
+                "warning": [
+                    null
+                ]
+            },
+            "changes": []
+        },
+        {
+            "name": "vendas",
+            "data": [
+                {
+                    "cliente": "Tou Na Mídia",
+                    "produto": "Site Dinâmico com Cakephp 3 - Básico",
+                    "preco_unitario": "3.63500",
+                    "quantidade": "1",
+                    "meta": {
+                        "revision": 7,
+                        "created": 1548095779054,
+                        "version": 0,
+                        "updated": 1548098189094
+                    },
+                    "$loki": 1
+                }
+            ],
+            "idIndex": [
+                1
+            ],
+            "binaryIndices": {},
+            "constraints": null,
+            "uniqueNames": [],
+            "transforms": {},
+            "objType": "vendas",
+            "dirty": false,
+            "cachedIndex": null,
+            "cachedBinaryIndex": null,
+            "cachedData": null,
+            "adaptiveBinaryIndices": true,
+            "transactional": false,
+            "cloneObjects": false,
+            "cloneMethod": "parse-stringify",
+            "asyncListeners": false,
+            "disableMeta": false,
+            "disableChangesApi": true,
+            "disableDeltaChangesApi": true,
+            "autoupdate": false,
+            "serializableIndices": true,
+            "ttl": null,
+            "maxId": 1,
+            "DynamicViews": [],
+            "events": {
+                "insert": [],
+                "update": [],
+                "pre-insert": [],
+                "pre-update": [],
+                "close": [],
+                "flushbuffer": [],
+                "error": [],
+                "delete": [
+                    null
+                ],
+                "warning": [
+                    null
+                ]
+            },
+            "changes": []
+        }
+    ],
+    "databaseVersion": 1.5,
+    "engineVersion": 1.5,
+    "autosave": false,
+    "autosaveInterval": 5000,
+    "autosaveHandle": null,
+    "throttledSaves": true,
+    "options": {
+        "serializationMethod": "normal",
+        "destructureDelimiter": "$<\n"
+    },
+    "persistenceMethod": "fs",
+    "persistenceAdapter": null,
+    "verbose": false,
+    "events": {
+        "init": [
+            null
+        ],
+        "loaded": [],
+        "flushChanges": [],
+        "close": [],
+        "changes": [],
+        "warning": []
+    },
+    "ENV": "NODEJS"
+}
