@@ -260,5 +260,11 @@ new Vue({
 
             alert('Coleções recriadas com sucesso...');
         }
+    },
+
+    computed: {
+        todaInfomacaoFront: function () {
+            return this.venda.dataVenda;
+        }
     }
 });

@@ -4,7 +4,7 @@ $(function () {
             "url": "datatables/json/Portuguese-Brasil.json"
         },
         "paging": true,
-        "lengthChange": false,
+        "lengthChange": true,
         "searching": true,
         "ordering": true,
         "info": true,
@@ -15,7 +15,7 @@ $(function () {
             "url": "datatables/json/Portuguese-Brasil.json"
         },
         "paging": true,
-        "lengthChange": false,
+        "lengthChange": true,
         "searching": true,
         "ordering": true,
         "info": true,

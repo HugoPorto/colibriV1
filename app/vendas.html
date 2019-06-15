@@ -155,7 +155,7 @@
                 <div class="form-actions">
                     <!--Se eu usar type="buttom ele não recarrega a página...-->
                     <button type="button" class="btn btn-large btn-negative" @click="openModal=false">Fechar</button>
-                    <button type="button" class="btn btn-large btn-primary" @click="saleStoreOrUpdate()">Salvar</button>
+                    <button type="button" class="btn btn-large btn-primary" v-if="todaInfomacaoFront" @click="saleStoreOrUpdate()">Salvar</button>
                 </div>
             </form>
         </div>
